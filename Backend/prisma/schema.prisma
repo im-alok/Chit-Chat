@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String       @id @default(cuid())
+  email      String       @unique
+  firstName  String
+  lastName   String
+  password   String?
+  profilePic String?
+  createdAt  DateTime?    @default(now())
+  updatedAt  DateTime     @updatedAt
+  message    Message[]
+  chat       ChatMember[]
+  groupAdmin Chat[]
+}
+
+model Chat {
+  id           String  @id @default(cuid())
+  chatName     String?
+  isGroupChat  Boolean @default(false)
+  groupAdminId String?
+  GroupAdmin   User?   @relation(fields: [groupAdminId], references: [id])
+
+  latestMessage String?      @unique
+  LatestMessage Message?     @relation("LatestMessage", fields: [latestMessage], references: [id])
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  message       Message[]
+  members       ChatMember[]
+}
+
+model ChatMember {
+  userId String
+  chatId String
+  User   User   @relation(fields: [userId], references: [id])
+  Chat   Chat   @relation(fields: [chatId], references: [id])
+
+  @@id([userId, chatId])
+}
+
+model Message {
+  id                   String   @id @default(cuid()) //chatId
+  userId               String //sender of message
+  chatId               String //message is belong to which sender
+  createdAt            DateTime @default(now())
+  User                 User     @relation(fields: [userId], references: [id])
+  Chat                 Chat     @relation(fields: [chatId], references: [id])
+  latestMessageForChat Chat?    @relation("LatestMessage")
+}
