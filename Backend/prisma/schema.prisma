@@ -12,7 +12,7 @@ model User {
   email      String       @unique
   firstName  String
   lastName   String
-  password   String?
+  password   String
   profilePic String?
   createdAt  DateTime?    @default(now())
   updatedAt  DateTime     @updatedAt
@@ -21,16 +21,23 @@ model User {
   groupAdmin Chat[]
 }
 
-model Chat {
-  id           String  @id @default(cuid())
-  chatName     String?
-  isGroupChat  Boolean @default(false)
-  groupAdminId String?
-  latestMessage String?      @unique
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
+model OTP {
+  id    String @id @default(cuid())
+  email String
+  OTP   String
+  createdAt DateTime @default(now())
+}
 
-  message       Message[] 
+model Chat {
+  id            String   @id @default(cuid())
+  chatName      String?
+  isGroupChat   Boolean  @default(false)
+  groupAdminId  String?
+  latestMessage String?  @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  message       Message[]
   members       ChatMember[]
   GroupAdmin    User?        @relation(fields: [groupAdminId], references: [id])
   LatestMessage Message?     @relation("LatestMessage", fields: [latestMessage], references: [id])
@@ -38,20 +45,20 @@ model Chat {
 
 model ChatMember {
   memberId String
-  chatId String
-  User   User   @relation(fields: [memberId], references: [id],onDelete: Cascade)
-  Chat   Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  chatId   String
+  User     User   @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  Chat     Chat   @relation(fields: [chatId], references: [id], onDelete: Cascade)
 
   @@id([memberId, chatId])
 }
 
 model Message {
   id                   String   @id @default(cuid()) //chatId
-  senderId               String //sender of message
+  senderId             String //sender of message
   chatId               String //message is belong to which sender
   message              String
   createdAt            DateTime @default(now())
   User                 User     @relation(fields: [senderId], references: [id], onDelete: Cascade)
-  Chat                 Chat     @relation(fields: [chatId], references: [id],onDelete: Cascade)
+  Chat                 Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
   latestMessageForChat Chat?    @relation("LatestMessage")
 }
