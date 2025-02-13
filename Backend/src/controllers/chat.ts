@@ -2,12 +2,17 @@
 import { Response, Request } from "express";
 import { Res } from "../utils/response/response-status";
 import { prisma } from "../utils/prisma-client";
+import zod from "zod";
 
 export const createChat = async (req: Request, res: Response) => {
+    const schema = zod.array(zod.string());
     try {
 
         const userId = req.body.userId;
         let {friendsId,chatName}:{friendsId:string[], chatName:string} = req.body
+
+        if(!schema?.safeParse(friendsId).success)
+            return Res(res,{message:'send the userIs in correct format', data:null},400)
 
         const chatDetails = <Chat>{}
         chatDetails.chatName = chatName
@@ -56,8 +61,10 @@ export const createChat = async (req: Request, res: Response) => {
 
 export const getChatDetails = async(req:Request, res:Response)=>{
     try {
+
+        const chatSchema = zod.string();
         const {chatId} = req.body;
-        if(!chatId){
+        if(!chatSchema.safeParse(chatId).success){
             return Res(res,{message:'chatId is undefined',data:null},500);
         }
 
@@ -81,9 +88,11 @@ export const getChatDetails = async(req:Request, res:Response)=>{
 }
 
 export const getUserAllChat = async(req:Request,res:Response)=>{
+    const userChatSchema = zod.string();
+
     try {
         const userId = req.body.userId;
-        if(!userId)
+        if(!userChatSchema.safeParse(userId).success)
             return Res(res,{message:'user is not found',data:null},400);
         const userChatDetails = await prisma.chatMember.findMany({
             where:{

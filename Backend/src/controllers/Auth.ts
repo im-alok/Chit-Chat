@@ -6,15 +6,19 @@ import jwt from "jsonwebtoken";
 import dotenv from 'dotenv'
 dotenv.config()
 import otpGenerator from 'otp-generator'
+import { registerZod,OTPZod,signInZod } from "../utils/Zod";
 
 const signIn =async(req:Request,res:Response)=>{
     try {
         if(!process.env.JWT_SECRET)
             throw new Error('JWT secret not found');
-        const {email,password} = req.body
-        if(!email || !password){
-            return Res(res,{message:'Some of the details is missing',data:null},400)
-        }
+
+        const payload = req.body.payload
+        const validate = OTPZod.safeParse(payload);
+        if(!validate.success)
+            throw new Error("wrong credentials");
+
+        const {email, password} =payload
         //check if user data exists or not
         const userDetails = await prisma.user.findUnique({
             where:{
@@ -61,10 +65,13 @@ const signIn =async(req:Request,res:Response)=>{
 
 const sendOTP = async(req:Request,res:Response)=>{
     try {
-        const {email} = req.body
-        if(!email){
-            return Res(res,{message:'email not found', data:null},400);
-        }
+        const payload = req.body.payload;
+        const validate = OTPZod.safeParse(payload);
+
+        if(!validate.success)
+            return Res(res,{message:'kindly enter correct email', data:null},400)
+
+        const {email} = payload
 
         //check if use already exist or not
         const userDetails = await prisma.user.findFirst({
@@ -101,9 +108,13 @@ const sendOTP = async(req:Request,res:Response)=>{
 
 const registerUser = async(req:Request, res:Response)=>{
     try {
-        let {firstName, lastName, email, password, OTP} = req.body;
-        if(!firstName || !lastName || !email || !password)
-            return Res(res,{message:'some data is missinig',data:null},400)
+        const userDetails = req.body.payload;
+        const validate = registerZod.safeParse(userDetails);
+        if(!validate){
+            return Res(res,{message:"Some of the details is Incorrect", data:null},400)
+        }
+
+        let {firstName, lastName, email, password, OTP} = userDetails;
 
         email = email.toLowerCase();
 
