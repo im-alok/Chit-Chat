@@ -1,20 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 
-@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Doto:wght@100..900&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Doto:wght@100..900&family=IBM+Plex+Serif:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
 
 @font-face {
-    font-family: Arcuata;
-    src: url('./assets/Fonts/Arcuata/ArcuataTrial-Medium.otf');
+  font-family: Arcuata;
+  src: url("./assets/Fonts/Arcuata/ArcuataTrial-Medium.otf");
 }
 
 @import "tailwindcss";
 
-@theme{
-    --font-arcuata:Arcuata, "sans-serif";
-    --font-dm-sans:"DM Sans", "sans-serif";
-    --font-ibm:"IBM Plex Serif","sans-serif";
-    --font-doto : Doto, "sans-serif";
-    --color-lime-white:rgb(232 236 241)
+@theme {
+  --font-arcuata: Arcuata, "sans-serif";
+  --font-dm-sans: "DM Sans", "sans-serif";
+  --font-ibm: "IBM Plex Serif", "sans-serif";
+  --font-doto: Doto, "sans-serif";
+  --color-lime-white: rgb(232 236 241);
+}
+
+.lable-style {
+  @apply text-[14px] text-amber-50;
+}
+.form-style {
+  @apply rounded-lg bg-black p-3 text-[16px] leading-[24px] text-amber-50 shadow-[0_1px_0_0] shadow-white/50 placeholder:text-gray-400 focus:outline-none;
 }

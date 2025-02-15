@@ -1,15 +1,20 @@
-import React from 'react'
-import AppBar from './LandingPage/AppBar'
-import MainSection from './LandingPage/MainSection'
+import React from "react";
+import AppBar from "./LandingPage/AppBar";
+import MainSection from "./LandingPage/MainSection";
+import { motion } from "motion/react";
 
 const LandingPage = () => {
-    return (
-        <div className='bg-black min-w-screen min-h-screen overflow-y-hidden'>
-            <AppBar />
-            <MainSection />
-        </div>
-    )
-}
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 2 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="min-h-screen min-w-screen overflow-hidden bg-black"
+    >
+      <AppBar />
+      <MainSection />
+    </motion.div>
+  );
+};
 
-export default LandingPage
-    
+export default LandingPage;
