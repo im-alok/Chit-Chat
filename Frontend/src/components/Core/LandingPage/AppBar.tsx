@@ -25,7 +25,7 @@ const AppBar = () => {
         initial={{ opacity: 0, scale: 5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative h-[60px] border-b-2 border-[#1e2c3b] bg-[url('/assets/bg-blue-gray.webp')] bg-cover "
+        className="relative h-[60px] border-b-2 border-[#1e2c3b] bg-[url('/assets/bg-blue-gray.webp')] bg-cover"
       >
         <div className="mx-auto flex w-11/12 items-center justify-between p-2">
           {/* Animated Title */}
@@ -41,13 +41,13 @@ const AppBar = () => {
           {/* Navigation Links */}
           <ul className="text-lime-white font-dm-sans hidden gap-7 sm:flex">
             {NavLinks.map((navLink) => (
-              <li key={navLink.title} className="group relative z-[100] flex w-fit p-2">
+              <li
+                key={navLink.title}
+                className="group relative z-[100] flex w-fit p-2"
+              >
                 {/* Highlight indicator for active link */}
                 <div
-                  className={` ${link === navLink.title ? "flex" : "hidden"} 
-                    absolute top-10 left-1/2 h-7 w-7 -translate-x-1/2 rotate-[45deg] 
-                    bg-gradient-to-b from-amber-200 via-amber-400 to-amber-500 shadow-[0px_0px_50px_10px] 
-                    shadow-amber-400 group-hover:flex`}
+                  className={` ${link === navLink.title ? "flex" : "hidden"} absolute top-10 left-1/2 h-7 w-7 -translate-x-1/2 rotate-[45deg] bg-gradient-to-b from-amber-200 via-amber-400 to-amber-500 shadow-[0px_0px_50px_10px] shadow-amber-400 group-hover:flex`}
                 ></div>
 
                 {/* Clickable Link */}

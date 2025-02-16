@@ -11,7 +11,7 @@ import DefaultChatPage from "./components/Core/UserChatPage/DefaultChatPage";
 
 const App = () => {
   return (
-    <motion.div className="w-screen h-screen bg-cover bg-black bg-no-repeat overflow-hidden">
+    <motion.div className="h-screen w-screen overflow-hidden bg-black bg-cover bg-no-repeat">
       <AppBar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -19,9 +19,8 @@ const App = () => {
         <Route path="/signup" element={<Register />} />
         <Route path="/otp" element={<OTP />} />
         <Route path="/chatapp" element={<UserChatPage />}>
-          <Route index element={<DefaultChatPage />}/>
-          <Route path="/chatapp/:id" element={<ConversationPage />}/>
-          
+          <Route index element={<DefaultChatPage />} />
+          <Route path="/chatapp/:id" element={<ConversationPage />} />
         </Route>
       </Routes>
     </motion.div>

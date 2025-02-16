@@ -34,11 +34,11 @@ const ProfileModal = ({ openModal }: any) => {
     <div
       ref={modalRef}
       onClick={(e: any) => closeModalHandler(e)}
-      className="absolute inset-0 w-screen overflow-hidden z-[1000]"
+      className="absolute inset-0 z-[1000] w-screen overflow-hidden"
     >
       <motion.div
-        initial={{ x: 250, }}
-        animate={{ x: 0, }}
+        initial={{ x: 250 }}
+        animate={{ x: 0 }}
         transition={{
           delay: 0.1,
           duration: 0.8,
@@ -50,8 +50,9 @@ const ProfileModal = ({ openModal }: any) => {
         <div className="items-col z-[1000] flex flex-col items-center justify-center gap-3 text-white backdrop-opacity-100">
           <div className="font-dm-sans flex flex-col gap-3 border-b-2 border-b-gray-400 p-5 text-center">
             {ProfileLinks?.map((link) => (
-              <Link key={link.title} to={link.to}
-              >{link.title}</Link>
+              <Link key={link.title} to={link.to}>
+                {link.title}
+              </Link>
             ))}
           </div>
 
