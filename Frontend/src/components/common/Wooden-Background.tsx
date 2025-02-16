@@ -1,9 +1,9 @@
 import React from "react";
 import { motion } from "motion/react";
 
-const WoodenBackground = ({ children }: any) => {
+const WoodenBackground = ({ children,customclasses }: any) => {
   return (
-    <div className="relative h-screen w-screen overflow-hidden bg-[url('/assets/bg-blue-gray.webp')] bg-cover">
+    <div className={`relative h-full w-full overflow-hidden bg-[url('/assets/bg-blue-gray.webp')] bg-cover ${customclasses}`}>
       <motion.div
         initial={{
           opacity: 0,

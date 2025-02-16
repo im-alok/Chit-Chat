@@ -20,7 +20,7 @@ const LoginForm = () => {
           console.log(data);
           reset();
         })}
-        className="flex flex-col gap-5"
+        className="flex flex-col gap-5 text-lime-100"
       >
         <label className="label-style flex flex-col gap-2">
           <p className="font-arcuata flex gap-2 text-base">
@@ -76,7 +76,7 @@ const LoginForm = () => {
           login
         </button>
       </form>
-      <Link className="text-xs text-blue-950 italic" to={"/signup"}>
+      <Link className="text-xs text-lime-300 italic" to={"/signup"}>
         Not register? Register here.{" "}
       </Link>
     </div>

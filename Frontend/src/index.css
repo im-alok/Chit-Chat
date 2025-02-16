@@ -17,6 +17,19 @@
   --font-ibm: "IBM Plex Serif", "sans-serif";
   --font-doto: Doto, "sans-serif";
   --color-lime-white: rgb(232 236 241);
+  --color-richBlack-900: #000814;
+  --color-richBlack-5: #F1F2FF;
+  --color-richBlack-25: #DBDDEA;
+  --color-richBlack-50: #C5C7D4;
+  --color-richBlack-100: #AFB2BF;
+  --color-richBlack-200: #999DAA;
+  --color-richBlack-300: #838894;
+  --color-richBlack-400: #6E727F;
+  --color-richBlack-500: #585D69;
+  --color-richBlack-600: #424854;
+  --color-richBlack-700: #2C333F;
+  --color-richBlack-800: #161D29;
+  --color-richBlack-900: #000814;
 }
 
 .lable-style {
@@ -24,4 +37,13 @@
 }
 .form-style {
   @apply rounded-lg bg-black p-3 text-[16px] leading-[24px] text-amber-50 shadow-[0_1px_0_0] shadow-white/50 placeholder:text-gray-400 focus:outline-none;
+}
+
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  scrollbar-width: none;
 }

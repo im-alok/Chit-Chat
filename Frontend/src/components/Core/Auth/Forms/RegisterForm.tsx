@@ -20,7 +20,7 @@ const RegisterForm = () => {
           console.log(data);
           reset();
         })}
-        className="flex flex-col flex-wrap gap-5"
+        className="flex flex-col flex-wrap gap-5 text-lime-100"
       >
         <div className="flex flex-col gap-2 sm:flex-row">
           <label className="label-style flex flex-col gap-2">
@@ -115,7 +115,7 @@ const RegisterForm = () => {
           login
         </button>
       </form>
-      <Link className="text-xs text-blue-950 italic" to={"/login"}>
+      <Link className="text-xs text-lime-300 italic" to={"/login"}>
         Already register? Login here.{" "}
       </Link>
     </div>

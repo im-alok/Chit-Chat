@@ -1,7 +1,5 @@
-import React from "react";
-import AppBar from "./LandingPage/AppBar";
-import MainSection from "./LandingPage/MainSection";
 import { motion } from "motion/react";
+import MainSection from "../components/Core/LandingPage/MainSection";
 
 const LandingPage = () => {
   return (
@@ -9,9 +7,8 @@ const LandingPage = () => {
       initial={{ opacity: 0, scale: 2 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="min-h-screen min-w-screen overflow-hidden bg-black"
+      className=""
     >
-      <AppBar />
       <MainSection />
     </motion.div>
   );

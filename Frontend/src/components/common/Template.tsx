@@ -2,9 +2,8 @@ import React from "react";
 import HighLightedText from "./HighLightedText";
 import { motion } from "motion/react";
 import WoodenBackground from "./Wooden-Background";
-import RegisterForm from "../Auth/Forms/RegisterForm";
-import LoginForm from "../Auth/Forms/LoginForm";
-
+import LoginForm from "../Core/Auth/Forms/LoginForm";
+import RegisterForm from "../Core/Auth/Forms/RegisterForm";
 const Template = ({ Title, formType }: { Title: string; formType: string }) => {
   return (
     <div>
@@ -14,7 +13,7 @@ const Template = ({ Title, formType }: { Title: string; formType: string }) => {
             initial={{ y: -15 }}
             animate={{ y: 0 }}
             transition={{ delay: 0.1, duration: 1, ease: "anticipate" }}
-            className="flex h-fit w-fit flex-col items-center justify-center gap-10 rounded-2xl bg-[url('/assets/maptexture2.webp')] bg-cover p-7 sm:flex-row"
+            className="flex h-fit w-fit flex-col items-center justify-center gap-10 rounded-2xl bg-[url('/assets/bg-black.webp')] bg-cover p-7 sm:flex-row shadow-2xl shadow-black inset-shadow-amber-200 inset-shadow-2xs drop-shadow-2xl"
           >
             <motion.div
               initial={{ filter: "blur(20px)" }}

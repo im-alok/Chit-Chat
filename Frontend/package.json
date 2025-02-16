@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "format:tailwind":"npx prettier --write ."
+    "format:tailwind": "npx prettier --write ."
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.6",

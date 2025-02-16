@@ -1,5 +1,5 @@
 import React from "react";
-import Template from "../common/Template";
+import Template from "../../common/Template";
 
 const Login = () => {
   return (

@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 
 const ProfileLinks = [
@@ -13,7 +13,7 @@ const ProfileLinks = [
   },
   {
     title: "Chat Page",
-    to: "/convo",
+    to: "/chatapp",
   },
   {
     title: "Say, Hi to Alok!",
@@ -28,21 +28,17 @@ const ProfileModal = ({ openModal }: any) => {
     if (e.target === modalRef?.current) openModal(false);
   }
 
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div
       ref={modalRef}
       onClick={(e: any) => closeModalHandler(e)}
-      className="absolute inset-0 w-screen overflow-hidden"
+      className="absolute inset-0 w-screen overflow-hidden z-[1000]"
     >
       <motion.div
-        initial={{
-          x: 250,
-        }}
-        animate={{
-          x: 0,
-        }}
+        initial={{ x: 250, }}
+        animate={{ x: 0, }}
         transition={{
           delay: 0.1,
           duration: 0.8,
@@ -54,11 +50,15 @@ const ProfileModal = ({ openModal }: any) => {
         <div className="items-col z-[1000] flex flex-col items-center justify-center gap-3 text-white backdrop-opacity-100">
           <div className="font-dm-sans flex flex-col gap-3 border-b-2 border-b-gray-400 p-5 text-center">
             {ProfileLinks?.map((link) => (
-              <Link to={link.to}>{link.title}</Link>
+              <Link key={link.title} to={link.to}
+              >{link.title}</Link>
             ))}
           </div>
 
-          <button onClick={()=>navigate('/login')} className="cursor-pointer font-doto animate-pulse bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 px-2 py-1 text-sm font-extrabold text-black shadow-[0px_0px_5px_1px] shadow-amber-400 transition-all duration-1000">
+          <button
+            onClick={() => navigate("/login")}
+            className="font-doto animate-pulse cursor-pointer bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 px-2 py-1 text-sm font-extrabold text-black shadow-[0px_0px_5px_1px] shadow-amber-400 transition-all duration-1000"
+          >
             Login
           </button>
 
