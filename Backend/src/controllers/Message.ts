@@ -5,7 +5,7 @@ import { prisma } from "../utils/prisma-client";
 
 export const sendMessage = async(req:Request, res:Response)=>{
     try {
-        const userId = req.body.id;
+        const userId = req.body.userId;
         const {senderId,chatId,message} = req.body
         if(!userId || senderId)
             return Res(res,{message:'details not found',data:null},400);

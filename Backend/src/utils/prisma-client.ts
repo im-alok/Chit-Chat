@@ -11,10 +11,11 @@ if(process.env.NODE_ENV !== "production")
 
 
 prisma?.$use(async(params,next)=>{
-    const result = await next(params);
+    
+    const result = await next(params); //next will execute the query
     if(params.action === "create"){
         if(params.model === 'OTP' && result.email){
-            sendMail(result.email,"OTP for the user",result.otp)
+            await sendMail(result.email,"OTP for the user",result.OTP)
         }
     }
     return result;

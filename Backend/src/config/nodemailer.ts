@@ -8,10 +8,11 @@ export const sendMail = async(email:string,title:string,body:string)=>{
         let transporter = nodemailer.createTransport({
             host:process.env.HOST,
             auth:{
-                user:process.env.USER,
-                pass:process.env.PASSWORD
+                user:process.env.NODEMAILER_USER,
+                pass:process.env.NODEMAILER_PASSWORD
             }
         })
+
 
         let info = await transporter.sendMail({
             from: 'Connect & Chat || Connect with world',
@@ -21,6 +22,7 @@ export const sendMail = async(email:string,title:string,body:string)=>{
         })
 
     } catch (error:any) {
-        console.log(error.message)
+        console.log(error)
+        
     }
 }
