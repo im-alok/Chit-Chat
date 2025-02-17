@@ -15,5 +15,6 @@ export const apiConnector = (
     data: body ? body : null,
     headers: headers ? headers : null,
     params: params ? params : null,
+    withCredentials:true,
   });
 };

@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { GoEye, GoEyeClosed } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Button from "../../../common/Button";
+import { useDispatch } from "react-redux";
+import { setUserRegistrationDetails } from "../../../../StateManagement/Slices/authSlice";
+import { sendOTP } from "../../../../Services/Operations/authOperations";
 
 const RegisterForm = () => {
   const [showPasswod, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -13,18 +19,21 @@ const RegisterForm = () => {
     formState: { errors },
   } = useForm();
 
+  const formSubmitHandler = async(data:any)=>{
+    dispatch(setUserRegistrationDetails(data));
+    await sendOTP({email:data.email},navigate);
+
+  }
+
   return (
     <div>
       <form
-        onSubmit={handleSubmit((data: any) => {
-          console.log(data);
-          reset();
-        })}
+        onSubmit={handleSubmit((data: any) => formSubmitHandler(data))}
         className="flex flex-col flex-wrap gap-5 text-lime-100"
       >
         <div className="flex flex-col gap-2 sm:flex-row">
           <label className="label-style flex flex-col gap-2">
-            <p className="font-arcuata flex gap-2 text-base">
+            <div className="font-arcuata flex gap-2 text-base">
               First Name
               <span className="text-red-700">*</span>
               {errors.firstName && (
@@ -32,7 +41,7 @@ const RegisterForm = () => {
                   required
                 </p>
               )}
-            </p>
+            </div>
 
             <input
               placeholder="first name"
@@ -43,7 +52,7 @@ const RegisterForm = () => {
           </label>
 
           <label className="label-style flex flex-col gap-2">
-            <p className="font-arcuata flex gap-2 text-base">
+            <div className="font-arcuata flex gap-2 text-base">
               Last Name
               <span className="text-red-700">*</span>
               {errors.lastName && (
@@ -51,7 +60,7 @@ const RegisterForm = () => {
                   required
                 </p>
               )}
-            </p>
+            </div>
 
             <input
               placeholder="last Name"
@@ -62,7 +71,7 @@ const RegisterForm = () => {
           </label>
         </div>
         <label className="label-style flex flex-col gap-2">
-          <p className="font-arcuata flex gap-2 text-base">
+          <div className="font-arcuata flex gap-2 text-base">
             Email
             <span className="text-red-700">*</span>
             {errors.email && (
@@ -70,7 +79,7 @@ const RegisterForm = () => {
                 required
               </p>
             )}
-          </p>
+          </div>
 
           <input
             placeholder="Enter your email address"
@@ -82,20 +91,32 @@ const RegisterForm = () => {
 
         <label className="flex items-end gap-2">
           <div className="relative w-full">
-            <p className="font-arcuata flex gap-2 text-base">
+            <div className="font-arcuata flex gap-2 text-base">
               Password
               <span className="text-red-700">*</span>
               {errors.password && (
                 <p className="font-doto text-sm font-semibold text-red-700">
-                  required
+                  {errors.password.message as string}
                 </p>
               )}
-            </p>
+            </div>
             <input
               placeholder="type your password"
               type={showPasswod ? "text" : "password"}
               className="w-full rounded-sm border-1 border-b-2 border-gray-700 border-b-black px-2 py-2 text-lg focus:outline-0"
-              {...register("password", { required: true })}
+              {...register("password", 
+                {
+                  required:{
+                    value:true,
+                    message:'required'
+                  },
+                  minLength:{
+                    value:8,
+                    message:'Password Length >=8'
+                  }
+                }
+
+              )}
             />
           </div>
 
@@ -108,12 +129,7 @@ const RegisterForm = () => {
           </span>
         </label>
 
-        <button
-          className="font-doto w-full cursor-pointer bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 px-2 py-1 text-sm font-extrabold text-black shadow-[0px_0px_5px_1px] shadow-amber-400 transition-all duration-200 active:scale-95"
-          type="submit"
-        >
-          login
-        </button>
+        <Button type='submit' onClick={()=>{}} customClasses="w-full">Register</Button>
       </form>
       <Link className="text-xs text-lime-300 italic" to={"/login"}>
         Already register? Login here.{" "}

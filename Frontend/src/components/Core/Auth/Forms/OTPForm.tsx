@@ -1,10 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
-import WoodenBackground from "../../common/Wooden-Background";
-import { FaArrowLeftLong } from "react-icons/fa6";
+import{ useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import { RegisterUser, sendOTP } from "../../../../Services/Operations/authOperations";
+import { useNavigate } from "react-router-dom";
+import { RiResetRightFill } from "react-icons/ri";
 
 const OTPForm = ({ length }: { length: number }) => {
   const [input, setInput] = useState<string[]>(new Array(length).fill(""));
+  const [otp,setOtp] = useState<String>("");
+  const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState(false);
+  const { userRegistrationDetails } = useSelector((state: any) => state.auth)
 
   const inputRef = useRef<HTMLInputElement[]>([]);
 
@@ -24,7 +29,10 @@ const OTPForm = ({ length }: { length: number }) => {
 
     const otp = newInputValues.join("");
 
-    if (otp.length === length) setActiveButton(true);
+    if (otp.length === length) {
+      setActiveButton(true);
+      setOtp(otp)
+    }
     if (value && index < length - 1 && inputRef?.current[index + 1])
       inputRef?.current[index + 1].focus();
   };
@@ -45,11 +53,19 @@ const OTPForm = ({ length }: { length: number }) => {
     inputRef?.current[index].setSelectionRange(1, 1);
   };
 
+  async function onClickHandler(e:any){
+    const data = {...userRegistrationDetails, OTP:otp};
+    await RegisterUser(data,navigate)
+  }
+  async function sendOtpAgain(){
+    await sendOTP({email:userRegistrationDetails.email},navigate)
+  }
+
   return (
-    <div className="">
+    <div className="flex flex-col  gap-3">
       <div className="flex flex-col items-center justify-center gap-10">
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-black via-transparent to-black opacity-80"></div>
-        <div className="z-[10] flex gap-7">
+        
+        <div className="flex gap-7">
           {input?.map((value, index) => (
             <input
               key={index}
@@ -66,12 +82,19 @@ const OTPForm = ({ length }: { length: number }) => {
         </div>
 
         <button
-          className={`font-arcuata z-[10] bg-gradient-to-r px-20 py-2 text-lg shadow-[0px_0px_5px_1px] shadow-amber-400 focus:outline-0 ${activeButton ? "cursor-pointer from-amber-200 via-amber-400 to-amber-500 text-black active:scale-95" : "cursor-not-allowed text-white"}`}
+          className={`font-arcuata bg-gradient-to-r px-20 py-2 text-lg shadow-[0px_0px_5px_1px] shadow-amber-400 focus:outline-0 ${activeButton ? "cursor-pointer from-amber-200 via-amber-400 to-amber-500 text-black active:scale-95" : "cursor-not-allowed text-white"}`}
           type="submit"
           disabled={!activeButton}
+          onClick={(e:any)=>onClickHandler(e)}
         >
           Verify Email
         </button>
+      </div>
+      <div className="flex items-center justify-center text-sm gap-1 cursor-pointer"
+      onClick={()=>sendOtpAgain()}
+      >
+        <RiResetRightFill />
+        resend
       </div>
     </div>
   );

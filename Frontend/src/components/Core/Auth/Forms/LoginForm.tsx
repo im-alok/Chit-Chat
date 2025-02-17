@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { GoEye, GoEyeClosed } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UserLogin } from "../../../../Services/Operations/authOperations";
+import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
   const [showPasswod, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -16,14 +20,13 @@ const LoginForm = () => {
   return (
     <div>
       <form
-        onSubmit={handleSubmit((data: any) => {
-          console.log(data);
-          reset();
+        onSubmit={handleSubmit(async(data: any) => {
+          const response = await UserLogin(data,navigate,dispatch);
         })}
         className="flex flex-col gap-5 text-lime-100"
       >
         <label className="label-style flex flex-col gap-2">
-          <p className="font-arcuata flex gap-2 text-base">
+          <div className="font-arcuata flex gap-2 text-base">
             Email
             <span className="text-red-700">*</span>
             {errors.email && (
@@ -31,7 +34,7 @@ const LoginForm = () => {
                 required
               </p>
             )}
-          </p>
+          </div>
 
           <input
             placeholder="Enter your email address"
@@ -43,20 +46,29 @@ const LoginForm = () => {
 
         <label className="flex items-end gap-2">
           <div className="relative">
-            <p className="font-arcuata flex gap-2 text-base">
+            <div className="font-arcuata flex gap-2 text-base">
               Password
               <span className="text-red-700">*</span>
               {errors.password && (
-                <p className="font-doto text-sm font-semibold text-red-700">
-                  required
+                <p className="font-doto text-xs font-semibold text-red-700">
+                  {errors.password.message as string}
                 </p>
               )}
-            </p>
+            </div>
             <input
               placeholder="type your password"
               type={showPasswod ? "text" : "password"}
               className="w-fit rounded-sm border-1 border-b-2 border-gray-700 border-b-black px-2 py-2 text-lg focus:outline-0"
-              {...register("password", { required: true })}
+              {...register("password", {
+                required:{
+                  value:true,
+                  message:'required'
+                },
+                minLength:{
+                  value:8,
+                  message:'password should be >=8'
+                }
+              })}
             />
           </div>
 

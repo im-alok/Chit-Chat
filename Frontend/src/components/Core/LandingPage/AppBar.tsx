@@ -47,7 +47,7 @@ const AppBar = () => {
               >
                 {/* Highlight indicator for active link */}
                 <div
-                  className={` ${link === navLink.title ? "flex" : "hidden"} absolute top-10 left-1/2 h-7 w-7 -translate-x-1/2 rotate-[45deg] bg-gradient-to-b from-amber-200 via-amber-400 to-amber-500 shadow-[0px_0px_50px_10px] shadow-amber-400 group-hover:flex`}
+                  className={` ${link === navLink.title ? "flex" : "hidden"} absolute top-11 left-1/2 h-5 w-5 -translate-x-1/2 rotate-[45deg] bg-gradient-to-b from-amber-200 via-amber-400 to-amber-500 shadow-[0px_0px_50px_10px] shadow-amber-400 group-hover:flex`}
                 ></div>
 
                 {/* Clickable Link */}

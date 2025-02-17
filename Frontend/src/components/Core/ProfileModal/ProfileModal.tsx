@@ -1,40 +1,44 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
+import { useDispatch, useSelector } from "react-redux";
+import { AuthReducer, RootReducer } from "slicetypes/index";
+import Button from "../../common/Button";
+import { LogOutHandler } from "../../../Services/Operations/authOperations";
 
 const ProfileLinks = [
-  {
-    title: "Profile",
-    to: "/profile",
-  },
-  {
-    title: "Settings",
-    to: "/settings",
-  },
-  {
-    title: "Chat Page",
-    to: "/chatapp",
-  },
-  {
-    title: "Say, Hi to Alok!",
-    to: "/convo",
-  },
+  {title: "Profile",to: "/profile",},
+  {title: "Settings",to: "/settings",},
+  {title: "Chat Page",to: "/chatapp",},
+  {title: "Say, Hi to Alok!",to: "/convo",},
 ];
 
 const ProfileModal = ({ openModal }: any) => {
   const modalRef = useRef<HTMLDivElement | null>(null);
 
+  
+  const navigate: NavigateFunction = useNavigate();
+  const { token }: AuthReducer = useSelector((state: RootReducer) => state.auth);
+  const dispatch = useDispatch();
+  
   function closeModalHandler(e: any) {
     if (e.target === modalRef?.current) openModal(false);
   }
+  const LoginButtonClicked = () => {
+    navigate("/login")
+    openModal(false)
+  }
 
-  const navigate = useNavigate();
+  function signOutHandler(){
+    // @ts-ignore
+    dispatch(LogOutHandler(navigate,dispatch))
+  }
 
   return (
     <div
       ref={modalRef}
       onClick={(e: any) => closeModalHandler(e)}
-      className="absolute inset-0 z-[1000] w-screen overflow-hidden"
+      className="absolute inset-0 z-[100] w-screen overflow-hidden"
     >
       <motion.div
         initial={{ x: 250 }}
@@ -44,26 +48,33 @@ const ProfileModal = ({ openModal }: any) => {
           duration: 0.8,
           ease: "backOut",
         }}
-        className="absolute top-1/5 right-1/20 z-[100] h-[230px] w-[200px] border-2 bg-[url('assets/bg-blue-gray.webp')] shadow-[0px_5px_1000px_-5px] shadow-gray-700 backdrop-opacity-100"
+        className="absolute top-1/5 right-1/20 z-[1000] h-[230px] w-[200px] border-2 bg-[url('assets/bg-blue-gray.webp')] shadow-[0px_5px_1000px_-5px] shadow-gray-700"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-80"></div>
-        <div className="items-col z-[1000] flex flex-col items-center justify-center gap-3 text-white backdrop-opacity-100">
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-80 z-10"></div>
+        <div className="items-col flex flex-col items-center justify-center gap-3 text-white z-[1000] relative">
           <div className="font-dm-sans flex flex-col gap-3 border-b-2 border-b-gray-400 p-5 text-center">
             {ProfileLinks?.map((link) => (
-              <Link key={link.title} to={link.to}>
+              <Link key={link.title} to={link.to}
+                onClick={() => openModal(false)}
+              >
                 {link.title}
               </Link>
             ))}
           </div>
 
-          <button
-            onClick={() => navigate("/login")}
-            className="font-doto animate-pulse cursor-pointer bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 px-2 py-1 text-sm font-extrabold text-black shadow-[0px_0px_5px_1px] shadow-amber-400 transition-all duration-1000"
-          >
-            Login
-          </button>
-
+          {
+            !token && (
+              <Button onClick={LoginButtonClicked}>Login</Button>
+            )
+          }
           {/* //logout button */}
+          {
+            token && (
+              <Button onClick={signOutHandler}>Signout</Button>
+            )
+          }
+
+
         </div>
       </motion.div>
     </div>

@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import MainSection from "../components/Core/LandingPage/MainSection";
 
+
 const LandingPage = () => {
   return (
     <motion.div

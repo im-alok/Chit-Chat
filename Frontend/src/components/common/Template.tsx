@@ -13,7 +13,7 @@ const Template = ({ Title, formType }: { Title: string; formType: string }) => {
             initial={{ y: -15 }}
             animate={{ y: 0 }}
             transition={{ delay: 0.1, duration: 1, ease: "anticipate" }}
-            className="flex h-fit w-fit flex-col items-center justify-center gap-10 rounded-2xl bg-[url('/assets/bg-black.webp')] bg-cover p-7 inset-shadow-2xs shadow-2xl shadow-black inset-shadow-amber-200 drop-shadow-2xl sm:flex-row"
+            className="flex h-fit w-fit flex-col items-center justify-center gap-10 rounded-2xl bg-[url('/assets/bg-black.webp')] bg-cover p-7 inset-shadow-2xs shadow-2xl shadow-black inset-shadow-amber-200 sm:flex-row"
           >
             <motion.div
               initial={{ filter: "blur(20px)" }}
