@@ -1,5 +1,4 @@
-import React, { useRef, useState } from "react";
-import { FaCross, FaSearchengin } from "react-icons/fa6";
+import{ useRef, useState } from "react";
 import { searchUser } from "../../../Services/Operations/miscOps";
 import Loading from "../../common/Loading";
 import UserProfile from "./Search/UserProfile";

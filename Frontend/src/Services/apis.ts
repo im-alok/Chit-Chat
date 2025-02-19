@@ -11,3 +11,9 @@ export const AUTH_URL ={
 export const MISC = {
     "GET_ALL_USER" : Base_URL +"/find/getusers"
 }
+
+
+export const CHATS = {
+    "CREATE_CHAT" : Base_URL + "/chats/createchats",
+    "GET_USER_CHATS" : Base_URL + "/chats/getuserchats"
+}

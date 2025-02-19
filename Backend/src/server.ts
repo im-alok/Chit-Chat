@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import userRoutes from './routes/UserRoutes'
 import miscRoutes from './routes/MiscRoutes'
+import chatRoutes from './routes/chatRoutes'
 
 //creating instance of express app
 const app = express();
@@ -25,7 +26,7 @@ app.use(cors({
 //api end points
 app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/find', miscRoutes)
-// app.use('/api/v1/conversation', chatRoutes);
+app.use('/api/v1/chats', chatRoutes);
 
 app.get('/', (req: Request, res: Response) => {
     res.status(200).json({
