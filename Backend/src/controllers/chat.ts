@@ -2,7 +2,7 @@
 import { Response, Request } from "express";
 import { Res } from "../utils/response/response-status";
 import { prisma } from "../utils/prisma-client";
-import zod from "zod";
+import zod, { unknown } from "zod";
 
 export const createChat = async (req: Request, res: Response) => {
     const schema = zod.array(zod.string());
@@ -102,24 +102,34 @@ export const createChat = async (req: Request, res: Response) => {
 
 export const getChatDetails = async (req: Request, res: Response) => {
     try {
-
         const chatSchema = zod.string();
-        const { chatId } = req.body;
+        const chatId = req.query.chatId as unknown as string
         if (!chatSchema.safeParse(chatId).success) {
             return Res(res, { message: 'chatId is undefined', data: null }, 500);
         }
 
         const chatDetails = await prisma.chat.findUnique({
-            include: {
-                message: true
-            }
-            , where: {
+            where: {
                 id: chatId
+            },
+            include: {
+                message: {
+                    include:{
+                        User:{
+                            omit:{
+                                password:true
+                            }
+                        }
+                    },
+                    orderBy:{
+                        createdAt:"asc"
+                    }
+                }
             }
         })
         if (!chatDetails)
             return Res(res, { message: 'chatDetails not found', data: null }, 400);
-
+        
         return Res(res, { message: 'chat details fetched successfully', data: chatDetails }, 200);
 
     } catch (error) {
@@ -134,18 +144,18 @@ export const getUserAllChat = async (req: Request, res: Response) => {
     try {
         const userId = req.body.userId;
         if (!userChatSchema.safeParse(userId).success)
-            return Res(res, { message: 'user is not found', data: null }, 400);
+            return Res(res, { message: 'User is not found', data: null }, 400);
 
-        //checking for userId
+        // Check if user exists
         const userdetails = await prisma.user.findUnique({
             where: {
                 id: userId
             }
-        })
-
+        });
         if (!userdetails)
             return Res(res, { message: "No user details found for given id", data: null }, 400);
 
+        // Fetching chat details
         const userChatDetails = await prisma.chatMember.findMany({
             where: {
                 memberId: userId
@@ -156,8 +166,11 @@ export const getUserAllChat = async (req: Request, res: Response) => {
                         members: {
                             include: {
                                 User: {
-                                    omit: {
-                                        password: true
+                                    select: {
+                                        id: true,
+                                        firstName: true,
+                                        lastName: true,
+                                        profilePic: true
                                     }
                                 }
                             }
@@ -171,12 +184,44 @@ export const getUserAllChat = async (req: Request, res: Response) => {
                     createdAt: "desc"
                 }
             }
-        })
+        });
 
-        return Res(res, { message: 'User Chat fetched successfully', data: userChatDetails }, 200);
+        // Filter members to exclude the current user
+        const filteredChatDetails = userChatDetails.map(chat => ({
+            ...chat,
+            Chat: {
+                ...chat.Chat,
+                members: chat.Chat.members.filter((member: any) => member.User.id !== userId)
+            }
+        }));
+
+        return Res(res, { message: 'User Chat fetched successfully', data: filteredChatDetails }, 200);
 
     } catch (error) {
-        return Res(res, { message: 'something went wrong', data: null }, 500)
+        console.log(error);
+        return Res(res, { message: 'Something went wrong', data: null }, 500);
+    }
+}
+
+export const chatUserDetails=async(req:Request, res:Response)=>{
+    const schema = zod.string();
+    try {
+        const userId = req.query.userId as unknown as string
+        if(!schema.safeParse(userId).success)
+            return Res(res,{message:"please sendn correct user id", data:null},400);
+
+        const userDetails = await prisma.user.findUnique({
+            where:{
+                id:userId
+            },
+            omit:{
+                password:true
+            }
+        })
+
+        return Res(res,{message:'Data fetched successfully', data:userDetails},200);
+    } catch (error) {
+        console.log(error)
     }
 }
 

@@ -17,7 +17,7 @@ const UserChatPage = () => {
           <div className="scrollbar-hidden relative z-10 max-h-[calc(100vh-135px)] items-center justify-center overflow-scroll min-h-[calc(100vh-135px)]">
             <Userfriend />
           </div>
-          <div className="border-richBlack-800 z-10 hidden max-h-[calc(100vh-135px)] min-h-[calc(100vh-135px)] items-center justify-center rounded-md border-1 sm:flex">
+          <div className="border-richBlack-800 z-10 hidden max-h-[calc(100vh-135px)] min-h-[calc(100vh-135px)] items-center justify-center rounded-md border-1 sm:flex w-[calc(100vw-380px)]">
             <Outlet />
           </div>
         </div>

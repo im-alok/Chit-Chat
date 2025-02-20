@@ -5,7 +5,8 @@ export interface RootReducer{
 interface AuthReducer{
     token?: string | null,
     loading?:boolean,
-    userRegistrationDetails?:UserDetails | null
+    userRegistrationDetails?:UserDetails | null,
+    myId?:string|null
 }
 
 interface UserDetails{

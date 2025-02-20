@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/otp" element={userRegistrationDetails ? (<OTP />):(<Navigate to={'/signup'} />)} />
         <Route path="/chatapp" element={<PrivateRoute><UserChatPage /></PrivateRoute>}>
           <Route index element={<PrivateRoute><DefaultChatPage /></PrivateRoute>} />
-          <Route path="/chatapp/:id" element={<PrivateRoute><ConversationPage /></PrivateRoute>} />
+          <Route path="/chatapp/:userId/:chatId" element={<PrivateRoute><ConversationPage /></PrivateRoute>} />
         </Route>
       </Routes>
     </motion.div>

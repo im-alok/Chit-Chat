@@ -15,5 +15,8 @@ export const MISC = {
 
 export const CHATS = {
     "CREATE_CHAT" : Base_URL + "/chats/createchats",
-    "GET_USER_CHATS" : Base_URL + "/chats/getuserchats"
+    "GET_USER_CHATS" : Base_URL + "/chats/getuserchats",
+    "GET_CHAT_DETAILS": Base_URL + "/chats/getchatdetails",
+    "GET_CHAT_USER_DETAILS" : Base_URL + "/chats/chatuserdetails",
+    "SEND_MESSAGE" : Base_URL + '/chats/sendmessage'
 }

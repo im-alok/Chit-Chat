@@ -48,9 +48,9 @@ const ProfileModal = ({ openModal }: any) => {
           duration: 0.8,
           ease: "backOut",
         }}
-        className="absolute top-1/5 right-1/20 z-[1000] h-[230px] w-[200px] border-2 bg-[url('assets/bg-blue-gray.webp')] shadow-[0px_5px_1000px_-5px] shadow-gray-700"
+        className="absolute top-1/5 right-1/20 z-[1000] h-[230px] w-[200px] border-2 bg-yellow-900 shadow-[0px_5px_1000px_-5px] shadow-gray-700"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-80 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-100 z-10"></div>
         <div className="items-col flex flex-col items-center justify-center gap-3 text-white z-[1000] relative">
           <div className="font-dm-sans flex flex-col gap-3 border-b-2 border-b-gray-400 p-5 text-center">
             {ProfileLinks?.map((link) => (

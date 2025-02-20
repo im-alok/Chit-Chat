@@ -8,8 +8,11 @@ import Loading from "../../common/Loading";
 const Userfriend = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {myId} = useSelector((state:any)=>state.auth)
+  console.log(myId);
 
   const { userChats } = useSelector((state: any) => state.chat);
+  console.log(userChats)  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +32,7 @@ const Userfriend = () => {
         <div
           className="bg-richBlack-800 flex cursor-pointer items-center gap-2 rounded-md border-2 border-neutral-900 p-5 text-lime-100 inset-shadow-2xs inset-shadow-neutral-600 transition-normal duration-200 hover:scale-[101%] hover:shadow-[0px_0px_5px_1px_#171717]"
           key={index}
-          onClick={() => navigate(`/chatapp/${chat?.chatId}`)}
+          onClick={() => navigate(`/chatapp/${chat?.Chat?.members[0]?.User?.id}/${chat?.chatId}`)}
         >
           <div className="rounded-full border-2 border-amber-950">
             <img

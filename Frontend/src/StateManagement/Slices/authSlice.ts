@@ -22,10 +22,21 @@ const checkLoggedInOrNot = (token:string | null)=>{
     }
 }
 
+async function getUserId(token:string | null){
+    try {
+        const decode = jwtDecode<JwtPayload>(token!)
+        return decode.id;
+            
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 const initial:AuthReducer = {
     token: localStorage.getItem('token') ? checkLoggedInOrNot(localStorage.getItem('token')) : null,
     loading:false,
-    userRegistrationDetails:null
+    userRegistrationDetails:null,
+    myId:await getUserId(localStorage.getItem('token'))
 
 }
 
@@ -42,6 +53,9 @@ const authSlice = createSlice({
         },
         setUserRegistrationDetails(state,value){
             state.userRegistrationDetails = value.payload
+        },
+        setMyId(state,value){
+            state.myId = value.payload
         }
     }
 })
